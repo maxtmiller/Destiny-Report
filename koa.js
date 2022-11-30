@@ -13,10 +13,12 @@ const destiny = new Destiny2API({
 	});
 
 const fs = require('fs').promises;
-destiny.getManifest()
-	.then(res => console.log(`Manifest: ${res.Response}`))
-	.catch(err => console.log(`Error: ${err}`));
 
+	destiny.getManifest()
+	.then(res => {
+		const data = res.Response;
+		console.log(data);
+		
 app.use(async ctx => {
     if (ctx.request.query.login) {
         let id = await _____.resolve(ctx.request.query.login);
