@@ -8,9 +8,14 @@ const { isContext } = require('vm');
 const axios = require('axios');
 const { url } = require('inspector');
 const Destiny2API = require('node-destiny-2');
-const destiny = new Destiny2API({key: 'f679d078d8014a2b80c7bb88929809a8'});
+const destiny = new Destiny2API({
+	key: 'f679d078d8014a2b80c7bb88929809a8'
+	});
 
 const fs = require('fs').promises;
+destiny.getManifest()
+	.then(res => console.log(`Manifest: ${res.Response}`))
+	.catch(err => console.log(`Error: ${err}`));
 
 app.use(async ctx => {
     if (ctx.request.query.login) {
