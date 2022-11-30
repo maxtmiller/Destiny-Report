@@ -6,7 +6,7 @@ const e = require('express');
 moment().format();
 const { isContext } = require('vm');
 const axios = require('axios');
-const { url } = require('inspector');
+const { destiny_name } = require('inspector');
 const Destiny2API = require('node-destiny-2');
 const destiny = new Destiny2API({
 	key: 'f679d078d8014a2b80c7bb88929809a8'
@@ -14,7 +14,7 @@ const destiny = new Destiny2API({
 
 const fs = require('fs').promises;
 
-destiny.searchDestinyPlayer(-1, 'URL')
+destiny.searchDestinyPlayer(-1, 'destiny_name')
     .then(res => {
         const data = res.Response;
         console.log(data);
@@ -23,7 +23,7 @@ destiny.searchDestinyPlayer(-1, 'URL')
 app.use(async ctx => {
     if (ctx.request.query.login) {
         let id = await _____.resolve(ctx.request.query.login);
-        let url = ctx.request.query.login;
+        let destiny_name = ctx.request.query.login;
 
         let file = await fs.readFile(__dirname + "/profile.html", "UTF-8");
         const template = Handlebars.compile(file);
