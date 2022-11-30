@@ -1,41 +1,47 @@
 const Koa = require('koa');
 const app = new Koa();
+var XMLHttpRequest = require('xhr2');
 const Handlebars = require("handlebars");
 var moment = require('moment');
 const e = require('express');
 moment().format();
 const { isContext } = require('vm');
 const axios = require('axios');
-const { destiny_name } = require('inspector');
+const { url } = require('inspector');
 const Destiny2API = require('node-destiny-2');
-const destiny = new Destiny2API({
-	key: 'f679d078d8014a2b80c7bb88929809a8'
-	});
+const destiny = new Destiny2API({key: 'f679d078d8014a2b80c7bb88929809a8'});
 
 const fs = require('fs').promises;
 
-destiny.searchDestinyPlayer(-1, 'destiny_name')
-    .then(res => {
-        const data = res.Response;
-        console.log(data);
-        console.log('\n\n');
-	
 app.use(async ctx => {
     if (ctx.request.query.login) {
-        let id = await _____.resolve(ctx.request.query.login);
-        let destiny_name = ctx.request.query.login;
+        let name = ctx.request.query.login;
+
+        destiny.searchDestinyPlayer(-1, name)
+            .then(res => {
+                const data = res.Response;
+                var id = data[0].membershipId
+
+                // console.log(data);
+                // console.log('\n\n');
+            });
+        
+        destiny.getProfile(1, id, [100])
+            .then(res => {
+                console.log(res.Response);
+            })
+            .catch(err => {
+                console.error(`getProfile Error: ${err}`);
+            });
 
         let file = await fs.readFile(__dirname + "/profile.html", "UTF-8");
         const template = Handlebars.compile(file);
         ctx.body = (template({ }));
 
     } else {
-
-        let games = destiny.GetBungieApplications;
-        console.log(games);
         let file = await fs.readFile(__dirname + "/profile-set.html", "UTF-8");
         const template = Handlebars.compile(file);
-        ctx.body = (template({ games: games }));
+        ctx.body = (template({ }));
     }
 });
 
