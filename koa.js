@@ -14,11 +14,15 @@ const destiny = new Destiny2API({
 
 const fs = require('fs').promises;
 
-	destiny.getManifest()
-	.then(res => {
-		const data = res.Response;
-		console.log(data);
-		
+destiny.getProfile(1, '4611686018452936098', [100])
+    .then(res => {
+        console.log(res.Response);
+    })
+    .catch(err => {
+        console.error(`getProfile Error: ${err}`);
+    });
+
+
 app.use(async ctx => {
     if (ctx.request.query.login) {
         let id = await _____.resolve(ctx.request.query.login);
