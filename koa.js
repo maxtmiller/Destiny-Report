@@ -14,15 +14,12 @@ const destiny = new Destiny2API({
 
 const fs = require('fs').promises;
 
-destiny.getProfile(1, '4611686018457028598', [100])
+destiny.searchDestinyPlayer(-1, 'URL')
     .then(res => {
-        console.log(res.Response);
-    })
-    .catch(err => {
-        console.error(`getProfile Error: ${err}`);
-    });
-
-
+        const data = res.Response;
+        console.log(data);
+        console.log('\n\n');
+	
 app.use(async ctx => {
     if (ctx.request.query.login) {
         let id = await _____.resolve(ctx.request.query.login);
