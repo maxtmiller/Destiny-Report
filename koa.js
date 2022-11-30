@@ -1,6 +1,5 @@
 const Koa = require('koa');
 const app = new Koa();
-var XMLHttpRequest = require('xhr2');
 const Handlebars = require("handlebars");
 var moment = require('moment');
 const e = require('express');
@@ -31,9 +30,12 @@ app.use(async ctx => {
         ctx.body = (template({ }));
 
     } else {
+
+        let games = destiny.GetBungieApplications;
+        console.log(games);
         let file = await fs.readFile(__dirname + "/profile-set.html", "UTF-8");
         const template = Handlebars.compile(file);
-        ctx.body = (template({ }));
+        ctx.body = (template({ games: games }));
     }
 });
 
