@@ -40,6 +40,9 @@ app.use(async ctx => {
             let stats = data_get_stats. allPvECompetitive;
             console.log(stats) 
 
+            const config = await JSON.parse(fs.readFileSync(__dirname +"/config.json"));
+
+
         } catch (error) {
             console.log(`Error: ${error}`);
         }
