@@ -17,7 +17,7 @@ const fsp = require('fs');
 app.use(async ctx => {
     if (ctx.request.query.login) {
         let name = ctx.request.query.login;
-        let config = JSON.parse(fsp.readFileSync(__dirname +"/config/config.json"));
+        let config = JSON.parse(fsp.readFileSync(__dirname +"/config/grconfig.json"));
         let auth = `${destiny.oauthConfig.url}?client_id=${config.oauth_client_id}&response_type=code`
 
         try {
