@@ -17,6 +17,8 @@ const fsp = require('fs');
 app.use(async ctx => {
     if (ctx.request.query.login) {
         let name = ctx.request.query.login;
+        let config = JSON.parse(fsp.readFileSync(__dirname +"/config/config.json"));
+        let auth = `${destiny.oauthConfig.url}?client_id=${config.oauth_client_id}&response_type=code`
 
         try {
             const search_player = await destiny.searchDestinyPlayer(-1, name);
@@ -41,8 +43,9 @@ app.use(async ctx => {
             let stats = data_get_stats. allPvECompetitive;
             console.log(stats) 
 
-            let config = JSON.parse(fsp.readFileSync(__dirname +"/config.json"));
             console.log(`${destiny.oauthConfig.url}?client_id=${config.oauth_client_id}&response_type=code`);
+
+            console.log(auth)
 
 
         } catch (error) {
@@ -57,7 +60,7 @@ app.use(async ctx => {
         let file = await fs.readFile(__dirname + "/navbar.html", "UTF-8");
         //let file = await fs.readFile(__dirname + "/dropdown.html", "UTF-8");
         const template = Handlebars.compile(file);
-        ctx.body = (template({ }));
+        ctx.body = (template({ auth: auth }));
 
     } else {
         let file = await fs.readFile(__dirname + "/profile-set.html", "UTF-8");
