@@ -12,6 +12,7 @@ const Destiny2API = require('node-destiny-2');
 const destiny = new Destiny2API({key: 'f679d078d8014a2b80c7bb88929809a8'});
 
 const fs = require('fs').promises;
+const fsp = require('fs');
 
 app.use(async ctx => {
     if (ctx.request.query.login) {
@@ -40,7 +41,8 @@ app.use(async ctx => {
             let stats = data_get_stats. allPvECompetitive;
             console.log(stats) 
 
-            const config = await JSON.parse(fs.readFileSync(__dirname +"/config.json"));
+            let config = JSON.parse(fsp.readFileSync(__dirname +"/config.json"));
+            console.log(`${destiny.oauthConfig.url}?client_id=${config.oauth_client_id}&response_type=code`);
 
 
         } catch (error) {
