@@ -139,7 +139,7 @@
     </head>
     
     <body>
-        <button type="button" onclick="myFunction()">
+        <button type="button" onclick="window.location.href='https://www.bungie.net/en/OAuth/Authorize/?client_id=42196&response_type=code';">
             <div class="centered">
                 <a href="#" class="steambutton"><span>Get Gambit Report</span><div class="icon">
                     <div class="fa">
@@ -148,13 +148,12 @@
                 </div></a>
             </div>
         </button>
-    
         <script>
             function myFunction() {
-              let URL = prompt("Please enter Your Bungie Username", "");
-              if (URL != null) {
-                window.location.search = "?login=" + URL
-              }
+                
+                if (URL != null) {
+                    window.location.search = "?login=" + URL
+                }
             }
         </script>
     </body>
