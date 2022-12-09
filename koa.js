@@ -43,10 +43,6 @@ app.use(async ctx => {
             let stats = data_get_stats. allPvECompetitive;
             console.log(stats) 
 
-            console.log(`${destiny.oauthConfig.url}?client_id=${config.oauth_client_id}&response_type=code`);
-
-            console.log(auth)
-
 
         } catch (error) {
             console.log(`Error: ${error}`);
