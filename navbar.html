@@ -4,123 +4,489 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="koa.js" defer></script>
     <title>
-        Document
+        Destiny Report
     </title>
+        <link rel="icon" id="favicon" type="image/x-icon" href="https://d4.alternativeto.net/C5CxjdybKPVVvcgsdpCekQISmMfrUQlLxlg8bYYNJB0/rs:fill:280:280:0/g:ce:0:0/YWJzOi8vZGlzdC9pY29ucy9kZXN0aW55LTJfMTQ4ODI1LnBuZw.png">
     <style>
         *,
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
         body {
-            font-family: 'Times New Roman', Times, serif;
+            font-family: "Roboto", sans-serif;
+            -webkit-font-smoothing: antialiased;            
+        }
+
+        #background {
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
             background-image: url('https://pixelz.cc/wp-content/uploads/2018/10/destiny-2-logo-uhd-4k-wallpaper.jpg');
         }
-
+        
         a {
-            text-decoration: none;
-            color: #fff;
+            text-align: center;
+            font-size: 25px;
+        }
+
+        section {
+            margin: 0px auto;
+            justify-content: center;
+            align-items: center;
+            min-width: 400px;
+        }
+
+        ol, ul {
+            list-style: none;
+            padding-inline-start: 1%;
+            padding-inline-end: 1%;
         }
 
         li {
-            list-style: none;
+            display: list-item;
+            text-align: -webkit-match-parent;
+            background: #333;
+            font-weight: bold;
         }
-
-        .navbar {
-            padding: 20px;
-            background-color: teal;
-            color: #fff;
-        }
-
-        /* NAVBAR MENU */
+        
         .menu {
+            min-width: 400px;
+        }
+
+        .menu .nav {
             display: flex;
+            background: #333;
+            color: white;
+            font-size: 18px;
+            border-radius: 10px;
+            box-shadow: 0px 20px 20px -20px rgba(228, 9, 9, 0.4);
+            justify-content: space-around;
+            border-top: 1px solid rgb(39, 38, 38);
+            margin-top: 7px;
+            width: 98%;
+            box-shadow: inset 0px -1px 1.5px rgba(255, 255, 255, .6),
+                        inset 0px 0px 1.5px rgba(0, 0, 0, .6);
+        }
+
+        .menu .nav > li {
+            padding: 30px 30px;
+            height: 15px;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.6);
+            position: relative;
+            transition: all 200ms ease-in-out;
+            perspective: 1000px;
+        }
+
+        .menu .nav > li:last-child {
+            border-right: none;
+            border-left: none;
+        }
+
+        .menu .nav > li:hover {
+            background: #444;
+        }
+
+        .menu .nav > li.is-active {
+            box-shadow: 0px -4px 0px #a00606 inset;
+            background: #222;
+            color: white;
+        }
+
+        @-webkit-keyframes note {
+            0% {
+                opacity: 0;
+                transform: scale(0.1) rotate(30deg) translateY(50px) rotateX(90deg);
+            }
+            50% {
+                transform: rotate(-10deg) rotateX(-2deg);
+                opacity: 1;
+            }
+            70% {
+                transform: rotate(3deg);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes note {
+            0% {
+                opacity: 0;
+                transform: scale(0.1) rotate(30deg) translateY(50px) rotateX(90deg);
+            }
+            50% {
+                transform: rotate(-10deg) rotateX(-2deg);
+                opacity: 1;
+            }
+            70% {
+                transform: rotate(3deg);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .line-animation {
+            margin: 0px;
+        }
+
+        .force-overflow {
+            min-height: 450px;
+        }
+        
+        ::-webkit-scrollbar-track
+        {
+            border-radius: 10px;
+            background-color: black;
+        }
+
+        ::-webkit-scrollbar
+        {
+            width: 6px;
+            background-color: black;
+        }
+
+        ::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+            background-color: rgba(228, 9, 9, 0.6);
+        }
+
+        form {
+            background-color: #4654e1;
+            width: 100%;
+            height: 44px;
+            border-radius: 5px;
+            display:flex;
+            flex-direction:row;
+            align-items:center;
+            margin: 0px;
+        }
+
+        input {
+            all: unset;
+            font: 16px system-ui;
+            color: #fff;
+            height: 100%;
+            width: 100%;
+        }
+
+        ::placeholder {
+            color: #fff;
+            opacity: 0.7; 
+        }
+
+        svg {
+            color: #fff;
+            fill: currentColor;
+            width: 24px;
+            height: 24px;
+            padding: 10px;
+        }
+
+        .left {
+            all: unset;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+        }
+
+        .search {
+            height: 44px;
+            min-width: 100px;
+            background: rgba(102, 102, 102, 0.8);
+            box-shadow: inset -1px -1px 1.5px rgba(255, 255, 255, .4),
+                        inset -1px 1px 1.5px rgba(0, 0, 0, .6);
+            border-radius: 5px;
+            margin: 0px;
+        }
+
+        .searchs {
+            width: 12.5%;
+            min-width: 150px;
+        }
+
+        .fixed {
+            display: flex;
+            justify-content: space-between;
+            position: fixed;
+            top: 10px;
+            width: 99.35%;
+        }
+
+        .search-logo {
+            background: rgba(44, 44, 44, 0.5);
+            border-radius: 0px 5px 5px 0px;
+        }
+
+        .steambutton {
+            display: flex;
+            background: rgba(83, 83, 83, 0.8);
+            min-width: 150px;
+            height: 44px;
+            line-height: 50px;
             margin: auto;
-            justify-content:space-around;
-            font-size: 30px;
-        }
-
-        .menu li {
-            padding: 8px 1px;
-        }
-
-        .menu li:hover {
-            background-color: #4c9e9e;
+            color: rgb(0, 0, 0);    
+            cursor: pointer;
+            overflow: hidden;
             border-radius: 5px;
-            transition: 0.3s ease;
+            box-shadow: inset 1px -1px 1.5px rgba(255, 255, 255, .4),
+                        inset 1px -1px 1.5px rgba(0, 0, 0, .6);
         }
 
-        .menu-font-size {
+        .steambutton span {
+            font-family: 'Exo 2', sans-serif;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            color: rgb(218, 214, 214);
+            width: 70%;
+            font-size: 14px;
+            text-transform: uppercase;
+            left: 0;
+            -webkit-transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+            transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+            background: rgba(77, 76, 76, 0.5);
+        }
+
+        .steambutton span,
+        .steambutton .icon {
+            display: block;
+            height: 96%;
+            text-align: center;
+            top: 0;
+        }
+
+        .steambutton .icon .fa {
             font-size: 30px;
+            line-height: 60px;
+            -webkit-transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4), height 0.25s ease;
+            transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4), height 0.25s ease;
+
         }
 
-        .gambit {
-            color: rgb(255, 255, 255);
+        .steambutton .icon {
+            width: 25%;
+            right: 0;
+            -webkit-transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+            transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+            padding-inline: 10px;
+        }
+
+        .steambutton span,
+        .steambutton .icon {
+            display: inline-flex;
+            height: 100%;
+            text-align: center;
+            top: 0;
+            background: rgba(77, 76, 76, 0.0);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fa {
+            display: inline-flex;
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: inherit;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transform: translate(0, 0);
+            background: rgba(110, 109, 109, 0);
+            height: 42px;
+            width: 31px;
+            align-items: center;
+        }
+
+        .steambutton span:after {
+            content: '';
+            background: rgba(77, 76, 76, 0.0);
+            width: 2px;
+            height: 70%;
+            top: 15%;
+            right: -1px;
+        }
+
+        .steambutton.success span,
+        .steambutton:hover span {
+            left: -72%;
+            opacity: 0;
+        }
+
+        .steambutton.success .icon,
+        .steambutton:hover .icon {
+            width: 100%;
+            left: 60%;
+            margin-right: 50%;
+        }
+
+        .steambutton.success .icon .fa,
+        .steambutton:hover .icon .fa {
             font-size: 30px;
-            padding: 9px 11px;
+            margin-left: 20px;
         }
 
-        .gambit:hover {
-            background-color: rgb(6, 158, 39);
-            border-radius: 5px;
-            font-size: 30px;
+        .auth {
+            justify-content: space-between;
+            display: flex;
         }
 
-        .crucible {
-            color: rgb(255, 255, 255);
-            font-size: 30px;
-            padding: 9px 10px;
+        .auth fixed {
+            justify-content: space-between;
+            display: flex;
         }
 
-        .crucible:hover {
-            background-color: rgb(189, 9, 33);
-            border-radius: 5px;
-            font-size: 30px;
+        .right {
+            margin-right: 10px;
+            width: 150px;
+            height: 50px
         }
 
-        .vanguard {
-            color: rgb(255, 255, 255);
-            font-size: 30px;
-            padding: 9px 10px;
+        .sign {
+            height: 44px;
+            width: 7.5%;
+            min-width: 150px;
+            background: rgba(77, 76, 76, 0.0);
         }
 
-        .vanguard:hover {
-            background-color: rgb(13, 123, 197);
-            border-radius: 5px;
-            font-size: 30px;
+        .sign-logo {
+            background: rgba(77, 76, 76, 0.0);
         }
 
-        .page-elements {
-            
+        button {
             height: 100%;
             width: 100%;
+            border-width: 0px;
+            offset: 0px;
+            margin: 10px;
         }
 
-        .image {
-            height: 100%;
-            width: 100%;
+        .auth-space {
+            width: 80%;
+            height: 44px;
+        }
+
+        .space-search{
+            margin-left: 15px;
+        }
+
+        #Fashion {
+            opacity: 1;
+        }
+
+        #Gambit {
+            opacity: 1;
+        }
+
+        #Xur {
+            opacity: 1;
+        }
+
+        .content { 
+            height: 1000px;
+            width: 800px;
+            background-color: rgba(0, 0, 0, 0.0);
+            padding-top: 200px;
         }
 
     </style>
 </head>
-<body>
-    <div class="page-elements">
-        <nav class="navbar">
-            <ul class="menu">
-                <li><a class="crucible" href="../profile.html">Fashion</a></li>
-                <li><a class="gambit">Gambit</a></li>
-                <li><a class="vanguard" href="/">Xur</a></li>
-            </ul>
-        </nav>
-        <div class="image">
+<body id="background">
+    <section class="menu">
+        <ul class="nav">
+            <li id="Fashion" class="is-active">Fashion</li>
+            <li id="Xur" class="is-active">Xur</li>
+            <li id="Gambit" class="is-active">Gambit</li>
+        </ul>
+    </section>
+    <section class="menu">
+        <div class="auth">
+            <div class="sign">
+                {{#if signIn}}
 
+                {{else}}
+                    <button onclick="SignIn()" class="steambutton">
+                        <span>Sign In</span><div class="icon">
+                            <div class="fa">
+                                <img class="sign-logo" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon/9908279ebbf1f9b250ba689db6a0222b/32/256x256.png" alt="" width = "31px" height = "30px"/>
+                            </div>
+                        </div>
+                    </button>
+                {{/if}}
+            </div>
+            <script>
+                function SignIn() {
+                    window.location.href=`{{destinyURL}}?client_id={{clientID}}&response_type=code`;
+                    signIn = true;
+                    //alert(document.URL)
+                }
+            </script>
+            <div class="auth-space"></div>
+            <div class="searchs" >
+                <form action="/" class="search" method="get" id="get-bungie-name">
+                    <input name="account" id="name" type="text" placeholder="Search..." aria-label="Search Bungie Name" class="space-search" data-search>
+                    <button onclick="Search()" type="submit" class="left" >
+                        <svg viewBox="0 0 1024 1024" class="search-logo"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
+                    </button>
+                    <script>
+                        function Search() {
+                            const form  = document.querySelector('#get-bungie-name');
+                            let name = form.elements['name'];
+                            BungieName = name.value;
+                            request = true;
+                            if (BungieName != null) {
+                                window.location.search = "account/" + BungieName
+                            }
+                        }
+                    </script>
+                </form>
+            </div>
         </div>
+    </section>
+    <script>
+        var sticky = document.querySelector('.auth');
+        var origOffsetY = sticky.offsetTop;
+
+        function onScroll(e) {
+            window.scrollY >= origOffsetY ? sticky.classList.add('fixed') :
+                                        sticky.classList.remove('fixed');
+        }
+
+        document.addEventListener('scroll', onScroll);
+    </script>
+    
+    <div class="content">
+
+    </div>
+    <div class="line-animation">
+        <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script id="rendered-js">
+            window.onbeforeunload = function () {
+                window.scrollTo(0, 0);
+            }
+            $('.nav li').click(function () {
+                $(this).addClass('is-active').siblings().removeClass('is-active');
+                window.scrollTo(0,300);
+                let currentID = $(this).attr('id')
+                if (currentID == 'Fashion') {
+                    document.getElementById("background").style.backgroundImage = "url('https://gaymingmag.com/wp-content/uploads/2021/09/bungied2.jpg')";
+                    document.title = "Fashion Report"
+                    document.querySelector("link[rel~='icon']").href = 'https://gambitreport.maxm20.repl.co/image.png';
+                } else if (currentID == 'Xur') {
+                    document.getElementById("background").style.backgroundImage = "url('https://blog.turtlebeach.com/wp-content/uploads/2022/07/Xur-Destiny-2.jpeg')";
+                    document.title = "Xur Report"
+                    document.querySelector("link[rel~='icon']").href = 'https://static-s.aa-cdn.net/img/ios/955286784/385854b6b5082969447098295dd34313?v=1';
+                } else if (currentID == 'Gambit') {
+                    document.getElementById("background").style.backgroundImage = "url('https://d1lss44hh2trtw.cloudfront.net/assets/article/2018/09/04/gambit-beginners-guide-destiny-2-forsaken_feature.jpg')";
+                    document.title = "Gambit Report"
+                    document.querySelector("link[rel~='icon']").href = 'https://www.blueberries.gg/wp-content/uploads/2021/12/Gambit-logo-Destiny-2.png';
+                }
+                // alert(test)
+            });
+            
+        </script>
     </div>
 </body>
 </html>
