@@ -384,7 +384,7 @@
         }
 
         .content { 
-            height: 1200px;
+            height: 1100px;
             width: 800px;
             background-color: rgba(0, 0, 0, 0.0);
             padding-top: 200px;
@@ -419,7 +419,6 @@
                 function SignIn() {
                     window.location.href=`{{destinyURL}}?client_id={{clientID}}&response_type=code`;
                     signIn = true;
-                    //alert(document.URL)
                 }
             </script>
             <div class="auth-space"></div>
@@ -447,25 +446,24 @@
     <script>
         var sticky = document.querySelector('.auth');
         var origOffsetY = sticky.offsetTop;
-
         function onScroll(e) {
             window.scrollY >= origOffsetY ? sticky.classList.add('fixed') :
                                         sticky.classList.remove('fixed');
         }
-
         document.addEventListener('scroll', onScroll);
     </script>
-    
-    <div class="content">
 
-    </div>
+    <div class="content"></div>
+
     <div class="line-animation">
         <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
         <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
         <script id="rendered-js">
             window.onbeforeunload = function () {
                 window.scrollTo(0, 0);
+                alert(window)
             }
+
             $('.nav li').click(function () {
                 $(this).addClass('is-active').siblings().removeClass('is-active');
                 window.scrollTo(0,300);
