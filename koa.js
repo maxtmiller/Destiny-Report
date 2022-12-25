@@ -27,8 +27,8 @@ var get_code = false
 app.use(async ctx => {
     var request = false;
 
-    if (ctx.request.query.account || ctx.request.query.code) {
-        let BungieName = ctx.request.query.account;
+    if (ctx.request.query.profile || ctx.request.query.account) {
+        let BungieName = ctx.request.query.profile;
         let config = JSON.parse(fsp.readFileSync(__dirname +"/config/grconfig.json"));
         let destinyURL = destiny.oauthConfig.url;
         let clientID = config.oauth_client_id;
