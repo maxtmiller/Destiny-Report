@@ -15,6 +15,7 @@ const fs = require('fs').promises;
 const fsp = require('fs');
 const jsdom = require("jsdom");
 const { sign } = require('crypto');
+const { profileEnd } = require('console');
 const { JSDOM } = jsdom;
 const fetch = (url) => import('node-fetch').then(({default: fetch}) => fetch(url));
 
@@ -22,7 +23,8 @@ var isFashion = false;
 var isGambit = false;
 var isXur = false;
 var signIn = false;
-var get_code = false
+
+let membershipID = ""
 
 app.use(async ctx => {
     var request = false;
@@ -33,13 +35,15 @@ app.use(async ctx => {
         let destinyURL = destiny.oauthConfig.url;
         let clientID = config.oauth_client_id;
         let clientSecret = config.oath_secret_id;
-        console.log(`${destinyURL}?client_id=${clientID}&response_type=code`)
+        //console.log(`${destinyURL}?client_id=${clientID}&response_type=code`)
 
-        let code = ctx.request.query.code
-        console.log(code)
+       
 
-        if (ctx.request.query.code) {
+        if (ctx.request.query.account) {
             signIn = true
+
+            membershipID = ctx.request.query.account;
+            console.log(membershipID);
 
             // const res = await fetch('https://www.bungie.net/Platform/App/OAuth/token/', {
             //     method: 'POST',
@@ -90,7 +94,7 @@ app.use(async ctx => {
 
         let file = await fs.readFile(__dirname + "/navbar.html", "UTF-8");
         const template = Handlebars.compile(file);
-        ctx.body = (template({ destinyURL: destinyURL, clientID: clientID, isFashion: isFashion, isGambit: isGambit, isXur: isXur, signIn: signIn, code: code, get_code: get_code }));
+        ctx.body = (template({ destinyURL: destinyURL, clientID: clientID, isFashion: isFashion, isGambit: isGambit, isXur: isXur, signIn: signIn, membershipID: membershipID }));
 
     } else {
         let config = JSON.parse(fsp.readFileSync(__dirname +"/config/grconfig.json"));
@@ -99,7 +103,7 @@ app.use(async ctx => {
 
         let file = await fs.readFile(__dirname + "/navbar.html", "UTF-8");
         const template = Handlebars.compile(file);
-        ctx.body = (template({ destinyURL: destinyURL, clientID: clientID, isFashion: isFashion, isGambit: isGambit, isXur: isXur, signIn: signIn, get_code: get_code }));
+        ctx.body = (template({ destinyURL: destinyURL, clientID: clientID, isFashion: isFashion, isGambit: isGambit, isXur: isXur, signIn: signIn }));
     }
 
 
