@@ -242,7 +242,7 @@
             letter-spacing: 0.1em;
             color: rgb(218, 214, 214);
             width: 70%;
-            font-size: 14px;
+            font-size: 15px;
             text-transform: uppercase;
             left: 0;
             -webkit-transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
@@ -294,7 +294,7 @@
             -moz-osx-font-smoothing: grayscale;
             transform: translate(0, 0);
             background: rgba(110, 109, 109, 0);
-            height: 42px;
+            height: 44px;
             width: 31px;
             align-items: center;
         }
@@ -390,11 +390,107 @@
             padding-top: 200px;
         }
 
+        .profile-name {
+            /* display: flex; */
+            background: rgba(83, 83, 83, 0.8);
+            min-width: 150px;
+            height: 44px;
+            margin: auto;
+            color: rgb(0, 0, 0);
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 5px;
+            box-shadow: inset 1px -1px 1.5px rgba(255, 255, 255, .4),
+                        inset 1px -1px 1.5px rgba(0, 0, 0, .6);
+        }
+
+        .profile-name span {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            flex-direction: row-reverse;
+            align-content: center;
+            justify-content: center;
+            height: 44px;
+
+            font-family: 'Exo 2', sans-serif;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            color: rgb(218, 214, 214);
+            font-size: 16px;
+            text-transform: uppercase;
+            -webkit-transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+            transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+
+            opacity: 1;
+        }
+
+        .profile-name a {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            flex-direction: row-reverse;
+            align-content: center;
+            justify-content: center;
+            height: 44px;
+
+            font-family: 'Exo 2', sans-serif;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            color: rgb(218, 214, 214);
+            font-size: 16px;
+            text-transform: uppercase;
+            -webkit-transition: all 0.35s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+            transition: all 0.35s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+            
+            margin-right: 10%;
+            margin-left: 15%;
+            opacity: 0;
+        }
+
+        .profile-name img {
+            -webkit-transition: all 0.35s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+            transition: all 0.35s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+
+            opacity: 0;
+        }
+
+        .profile-name.success a,
+        .profile-name:hover a,
+        .profile-name.success img,
+        .profile-name:hover img {
+            opacity: 1;
+            transition-delay:0.1s;
+        }
+
+        .profile-name.success span,
+        .profile-name:hover span {
+            opacity: 0;
+        }
+
+        .plots {
+            display: flex;
+            justify-content:space-around;
+        }
+
+        .log {
+            position: relative;
+            display: flex;
+            width: 100%;
+        }
+
+        .acc {
+            position: absolute;
+        }
+
     </style>
 </head>
 <script>
+    function Load() {
+        console.log(membershipID);
+    }
 </script>
-<body id="background">
+<body id="background" onload="Load()">
     <section class="menu">
         <ul class="nav">
             <li id="Fashion" class="is-active">Fashion</li>
@@ -406,7 +502,17 @@
         <div class="auth">
             <div class="sign">
                 {{#if signIn}}
-
+                    <button onclick="LogOut()" class="profile-name">
+                        <div class="plots">
+                            <div class="log">
+                                <a>Log Out</a>
+                                <div class="fa">
+                                    <img class="sign-logo" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon/9908279ebbf1f9b250ba689db6a0222b/32/256x256.png" alt="" width = "31px" height = "30px"/>
+                                </div>
+                            </div>
+                            <span class="acc">{{membershipID}}</span>
+                        </div>
+                    </button>
                 {{else}}
                     <button onclick="SignIn()" class="steambutton">
                         <span>Sign In</span><div class="icon">
@@ -421,6 +527,11 @@
                 function SignIn() {
                     window.location.href=`{{destinyURL}}?client_id={{clientID}}&response_type=code`;
                     signIn = true;
+                }
+
+                function LogOut() {
+                    let currentURL = document.URL
+                    window.location.href = document.URL.replace(currentURL, "http://localhost:3000/");
                 }
             </script>
             <div class="auth-space"></div>
@@ -463,7 +574,6 @@
         <script id="rendered-js">
             window.onbeforeunload = function () {
                 window.scrollTo(0, 0);
-                alert(window)
             }
 
             $('.nav li').click(function () {
