@@ -1,4 +1,4 @@
-# GambitReport
+# Destiny-Report
 
 Exclusive website for accessing gambit stats, xur items, and guardian fashion in D2.
 
