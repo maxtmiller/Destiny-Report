@@ -1,4 +1,4 @@
-# Destiny-Report - Work in Progress
+# Destiny Report - Work in Progress
 
 Exclusive website for accessing gambit stats, xur items, and guardian fashion cosmetics in Destiny 2.
 
